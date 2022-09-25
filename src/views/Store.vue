@@ -42,6 +42,16 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
+let input = ref("");
+const fruits = ["apple", "banana", "orange"];
+function filteredList() {
+  return fruits.filter((fruit) =>
+    fruit.toLowerCase().includes(input.value.toLowerCase())
+  );
+}
+
 
 export default{
     data:() => {
@@ -104,15 +114,14 @@ export default{
     },
     async mounted(){
 
-        let rezultat = await fetch('https://github.com/Rino-Malba/Ecomedico-back/blob/main/src/memory_storage.js');
-
-
-        let produkt = await rezultat.json();
-
-        for (let item of produkt) {
-
-            console.log(item);
-        }
+        try{
+            let rezultat = await fetch("http://localhost:3000/products_memory");
+            console.log(rezultat)
+            let rezultatiJSON = await rezultat.json()
+            console.log(rezultatiJSON)
+        } catch(error) {
+            console.log(error)
+        }  
     },
 };
 
